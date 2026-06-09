@@ -396,7 +396,7 @@ def create_admin_app() -> Starlette:
 
     app = Starlette(routes=routes)
     app.add_middleware(SessionMiddleware, secret_key=EnvKeys.SECRET_KEY, max_age=1800)
-
+      app.add_middleware(ForceHTTPSMiddleware)  # 添加这一行
     auth_backend = AdminAuth(secret_key=EnvKeys.SECRET_KEY)
     admin = Admin(
         app,
