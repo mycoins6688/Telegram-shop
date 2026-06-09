@@ -410,6 +410,7 @@ def create_admin_app() -> Starlette:
         engine=Database().engine,
         authentication_backend=auth_backend,
         title="Telegram Shop Admin",
+        name="Admin",  # 添加这一行
         base_url="/admin",  # 添加这一行
     )
 
