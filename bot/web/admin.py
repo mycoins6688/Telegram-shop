@@ -1,6 +1,7 @@
 import logging
 import time
 from typing import Any
+from starlette.middleware.base import BaseHTTPMiddleware
 
 from sqladmin import Admin, ModelView
 from sqladmin.authentication import AuthenticationBackend
@@ -384,6 +385,12 @@ async def metrics_json(request: Request) -> JSONResponse:
 
 
 # App Factory
+class ForceHTTPSMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request, call_next):
+        request.scope["scheme"] = "https"
+        response = await call_next(request)
+        return response
+
 def create_admin_app() -> Starlette:
 
     from bot.web.export import export_routes
